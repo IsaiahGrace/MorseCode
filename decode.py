@@ -75,7 +75,7 @@ def findPossible(morse):
     buildTree(root, charList)
     buildSolutions(solutions, root)
     #for pre,fill,node in tree.RenderTree(root):
-    #    print("%s%s" % (pre, node.name))    
+    #    print("%s%s" % (pre, node.name))
     return(solutions)
 
 def findWords(solutions):
