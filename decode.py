@@ -77,8 +77,8 @@ def findPossible(morse):
     root = tree.Node('')
     buildTree(root, charList)
     buildSolutions(solutions, root)
-    for pre,fill,node in tree.RenderTree(root):
-        print("%s%s" % (pre, node.name))
+    #for pre,fill,node in tree.RenderTree(root):
+        #print("%s%s" % (pre, node.name))
     return(solutions)
 
 def findWords(solutions):
@@ -104,11 +104,7 @@ def recurseDecode(complete, incomplete, node, code):
         if list(key) == code[:len(key)]:
             newNode = tree.Node(morse_text[key])
             newNode.parent = node
-<<<<<<< HEAD
             recurseDecode(complete, incomplete, newNode, code[len(key):])    
-=======
-            recurseDecode(words, newNode, code[len(key):])
->>>>>>> e150bc7d4fe35bfa890d6b1ea2510ff3a1e075f9
     return()
 
 def decodeWords(code):
