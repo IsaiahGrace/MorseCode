@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import sys
 import enchant
 import encode
