@@ -3,6 +3,7 @@
 #Decode an input morse code string that lacks spaces into meaningfull words
 
 import anytree as tree
+import enchant
 import encode
 
 #Define dictionary to convert morse to char
@@ -73,19 +74,28 @@ def findPossible(morse):
     root = tree.Node('')
     buildTree(root, charList)
     buildSolutions(solutions, root)
-    for pre,fill,node in tree.RenderTree(root):
-        print("%s%s" % (pre, node.name))    
+    #for pre,fill,node in tree.RenderTree(root):
+    #    print("%s%s" % (pre, node.name))    
     return(solutions)
 
-
+def findWords(solutions):
+    dictionary = enchant.Dict("en_US")
+    words = set()
+    for word in solutions:
+        if dictionary.check(word):
+            words.add(word)
+    return(words)
 
 if __name__ == "__main__":
     # L = .-..
     # Possible interpretations of .-.. are:
     # L, AI, ED, RE, AEE, ENE, ETI, ETEE
-    char = 'L'
+    char = 'computer'
     code = encode.encodeMorse(char)
+    solutions = findPossible(code)
     print("Origional input:")
     print(char + ': ' + code)
-    print("Possible inputs:")
-    print(findPossible(code))
+    print("Number of possible solutions:")
+    print(len(solutions))
+    print("Words found:")
+    print(findWords(solutions))
