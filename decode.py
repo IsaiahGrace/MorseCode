@@ -43,10 +43,23 @@ morse_text = {'.-':'a',
 
 
 def findPossible(morse):
+    
     solutions = []
-    for char in morse:
-        print(morse_text[char])
-    return(None)
+    charList = list(morse)
+    for char in charList:
+        if not char == '.' and not char == '-':
+            print("Error! bad morse code, only include '.' and '-'")
+            return(None)
+
+    ## The longest interpretation of the morse code will be all e and t with length = len(charList)
+    for count in range(0,len(charList)):
+        first = ''.join(charList[:len(charList) - count])
+        solution = morse_text.get(first,'')
+        if solution:
+            solutions.append(solution)
+            solution = ''
+        
+    return(solutions)
 
 
 
