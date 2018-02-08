@@ -89,33 +89,36 @@ def findWords(solutions):
             words.add(word)
     return(words)
 
-def recurseDecode(words, node, code):
-    if not code:
-        solution =''
-        for ancestor in node.ancestors:
-            solution += ancestor.name
-        solution += node.name
-        if solution and d.check(solution):
-            words.add(solution)
-        return()
+def recurseDecode(complete, incomplete, node, code):
+    solution =''
+    for ancestor in node.ancestors:
+        solution += ancestor.name
+    solution += node.name
+    if solution and d.check(solution):
+        if not code:
+            complete.add(solution)
+            return()
+        else:
+            incomplete.add((solution, ''.join(code)))
     for key in morse_text.keys():
         if list(key) == code[:len(key)]:
             newNode = tree.Node(morse_text[key])
             newNode.parent = node
-            recurseDecode(words, newNode, code[len(key):])    
+            recurseDecode(complete, incomplete, newNode, code[len(key):])    
     return()
     
 def decodeWords(code):
-    words = set()
+    complete = set()
+    incomplete = set()
     root = tree.Node('')
-    recurseDecode(words, root, list(code))
-    return(words)
+    recurseDecode(complete, incomplete, root, list(code))
+    return(complete, incomplete)
 
 if __name__ == "__main__":
     # L = .-..
     # Possible interpretations of .-.. are:
     # L, AI, ED, RE, AEE, ENE, ETI, ETEE
-    char = 'compute'
+    char = 'test one'
     code = encode.encodeMorse(char)
     #solutions = findPossible(code)
     print("Origional input:")
@@ -126,4 +129,12 @@ if __name__ == "__main__":
     #print("Words found:")
     #print(findWords(solutions))
     print("decode function:")
-    print(decodeWords(code))
+    complete, incomplete = decodeWords(code)
+    print("Complete words:")
+    print(complete)
+    print("incomplete words:")
+    print(incomplete)
+    for word,code in incomplete:
+        comp2, incomp2 = decodeWords(code)
+        print(word)
+        print(comp2)
